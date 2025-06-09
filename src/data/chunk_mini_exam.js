@@ -178,5 +178,95 @@ export const chunk_mini_exam = [
     correct: 1,
     uitleg: "Chain of custody is het correct documenteren van bewijsverplaatsing en toegang.",
     mnemonic: "Chain = ketting = ononderbroken, dus altijd traceerbaar!"
+  },
+  {
+    vraag: "Welk register fungeert als de stack pointer in x86-architectuur?",
+    opties: [
+      "EAX",
+      "ESP",
+      "EBX",
+      "ESI"
+    ],
+    correct: 1,
+    uitleg: "ESP is de stack pointer in x86-architectuur.",
+    mnemonic: "ESP = Stack Pointer."
+  },
+  {
+    vraag: "Welke stelling over registers is correct?",
+    opties: [
+      "eax is een 64-bit register.",
+      "rdx is een 64-bit register.",
+      "bx is een 8-bit register.",
+      "rcx is een 32-bit register."
+    ],
+    correct: 1,
+    uitleg: "rdx is een 64-bit register (in x86-64).",
+    mnemonic: "r-registers = 64-bit."
+  },
+  {
+    vraag: "Wat is het primaire doel van reverse engineering?",
+    opties: [
+      "Nieuwe software schrijven.",
+      "Bestaande software analyseren om de werking te begrijpen.",
+      "Malware verspreiden.",
+      "Broncode compileren."
+    ],
+    correct: 1,
+    uitleg: "Reverse engineering is bedoeld om bestaande software te analyseren en te begrijpen.",
+    mnemonic: "Reverse = begrijpen."
+  },
+  {
+    vraag: "Wat gaat verloren tijdens disassembly?",
+    opties: [
+      "Alleen variabelenamen.",
+      "Commentaren, variabelenamen en compiler-optimalisaties.",
+      "Alleen machinecode.",
+      "Netwerkverbindingen."
+    ],
+    correct: 1,
+    uitleg: "Tijdens disassembly gaan commentaren, variabelenamen en optimalisaties verloren.",
+    mnemonic: "Disassembly = alleen code, geen namen/comm."
+  },
+  {
+    vraag: "Welke techniek overschrijft een buffer met meer data dan het aankan?",
+    opties: [
+      "SQL-injectie",
+      "Buffer overflow",
+      "Cross-site scripting",
+      "Phishing"
+    ],
+    correct: 1,
+    uitleg: "Buffer overflow betekent dat een buffer meer data krijgt dan hij aankan.",
+    mnemonic: "Overflow = te veel data."
+  },
+  {
+    vraag: "True/False: x86- en x86-64-architecturen gebruiken Big Endian.",
+    opties: [
+      "True",
+      "False"
+    ],
+    correct: 1,
+    uitleg: "x86 en x86-64 gebruiken Little Endian.",
+    mnemonic: "x86 = Little Endian."
+  },
+  {
+    vraag: "True/False: De IAT (Import Address Table) bevat geëxporteerde functies.",
+    opties: [
+      "True",
+      "False"
+    ],
+    correct: 1,
+    uitleg: "De IAT bevat geïmporteerde functies, niet geëxporteerde.",
+    mnemonic: "IAT = Import Address Table."
+  },
+  {
+    vraag: "True/False: Een nibble is 8 bits groot.",
+    opties: [
+      "True",
+      "False"
+    ],
+    correct: 1,
+    uitleg: "Een nibble is 4 bits.",
+    mnemonic: "Nibble = 4 bits."
   }
 ]; 

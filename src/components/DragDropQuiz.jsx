@@ -220,7 +220,7 @@ export default function DragDropQuiz({ vragen, onDone, showOefenExamenButton, cu
   const [dragged, setDragged] = useState(null);
   const [mixedVragen, setMixedVragen] = useState(initialMixedVragen ?? null);
   const [showResult, setShowResult] = useState(false);
-  const [vragen] = useState(() => prepareVragen(vragen));
+  const [shuffledVragen] = useState(() => prepareVragen(vragen));
 
   useEffect(() => {
     if (onProgress) {
@@ -242,7 +242,7 @@ export default function DragDropQuiz({ vragen, onDone, showOefenExamenButton, cu
     const newSelected = [...selected];
     newSelected[current] = dragged;
     setSelected(newSelected);
-    const juist = dragged === vragen[current].correct;
+    const juist = dragged === shuffledVragen[current].correct;
     const newConfirmed = [...confirmed];
     newConfirmed[current] = juist;
     setConfirmed(newConfirmed);
@@ -262,7 +262,7 @@ export default function DragDropQuiz({ vragen, onDone, showOefenExamenButton, cu
       newFeedback[current] = "Onbeantwoord";
       setFeedback(newFeedback);
     }
-    if (current < vragen.length - 1) setCurrent(current + 1);
+    if (current < shuffledVragen.length - 1) setCurrent(current + 1);
   }
 
   function handlePrev() {
@@ -270,7 +270,7 @@ export default function DragDropQuiz({ vragen, onDone, showOefenExamenButton, cu
   }
 
   function handleBack() {
-    if (onDone) onDone(score, vragen.length);
+    if (onDone) onDone(score, shuffledVragen.length);
   }
 
   function handleRetry() {
@@ -289,9 +289,9 @@ export default function DragDropQuiz({ vragen, onDone, showOefenExamenButton, cu
   function handleRestart() {
     setCurrent(0);
     setScore(0);
-    setSelected(Array(vragen.length).fill(null));
-    setConfirmed(Array(vragen.length).fill(false));
-    setFeedback(Array(vragen.length).fill(null));
+    setSelected(Array(shuffledVragen.length).fill(null));
+    setConfirmed(Array(shuffledVragen.length).fill(false));
+    setFeedback(Array(shuffledVragen.length).fill(null));
   }
 
   function handleOefenExamen() {
@@ -314,8 +314,8 @@ export default function DragDropQuiz({ vragen, onDone, showOefenExamenButton, cu
     setFeedback(Array(shuffled.length).fill(null));
   }
 
-  // Gebruik mixedVragen als die er is, anders de originele vragen
-  const quizVragen = mixedVragen || vragen;
+  // Gebruik mixedVragen als die er is, anders de originele geshuffelde vragen
+  const quizVragen = mixedVragen || shuffledVragen;
 
   if (showResult) {
     return (

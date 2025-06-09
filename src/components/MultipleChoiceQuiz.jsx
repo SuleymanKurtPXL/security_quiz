@@ -207,12 +207,12 @@ function prepareVragen(vragen) {
 }
 
 export default function MultipleChoiceQuiz({ vragen, onDone, current: initialCurrent, score: initialScore, selected: initialSelected, confirmed: initialConfirmed, feedback: initialFeedback, onProgress }) {
-  const [vragen] = useState(() => prepareVragen(vragen));
+  const [shuffledVragen] = useState(() => prepareVragen(vragen));
   const [current, setCurrent] = useState(initialCurrent ?? 0);
   const [score, setScore] = useState(initialScore ?? 0);
-  const [selected, setSelected] = useState(initialSelected ?? Array(vragen.length).fill(null));
-  const [confirmed, setConfirmed] = useState(initialConfirmed ?? Array(vragen.length).fill(false));
-  const [feedback, setFeedback] = useState(initialFeedback ?? Array(vragen.length).fill(null));
+  const [selected, setSelected] = useState(initialSelected ?? Array(shuffledVragen.length).fill(null));
+  const [confirmed, setConfirmed] = useState(initialConfirmed ?? Array(shuffledVragen.length).fill(false));
+  const [feedback, setFeedback] = useState(initialFeedback ?? Array(shuffledVragen.length).fill(null));
   const [showResult, setShowResult] = useState(false);
 
   useEffect(() => {
@@ -226,7 +226,7 @@ export default function MultipleChoiceQuiz({ vragen, onDone, current: initialCur
     const newSelected = [...selected];
     newSelected[current] = idx;
     setSelected(newSelected);
-    const juist = idx === vragen[current].correct;
+    const juist = idx === shuffledVragen[current].correct;
     const newConfirmed = [...confirmed];
     newConfirmed[current] = true;
     setConfirmed(newConfirmed);
@@ -237,7 +237,7 @@ export default function MultipleChoiceQuiz({ vragen, onDone, current: initialCur
   }
 
   function handleNext() {
-    if (current < vragen.length - 1) setCurrent(current + 1);
+    if (current < shuffledVragen.length - 1) setCurrent(current + 1);
   }
 
   function handlePrev() {
@@ -245,15 +245,15 @@ export default function MultipleChoiceQuiz({ vragen, onDone, current: initialCur
   }
 
   function handleBack() {
-    if (onDone) onDone(score, vragen.length);
+    if (onDone) onDone(score, shuffledVragen.length);
   }
 
   function handleRestart() {
     setCurrent(0);
     setScore(0);
-    setSelected(Array(vragen.length).fill(null));
-    setConfirmed(Array(vragen.length).fill(false));
-    setFeedback(Array(vragen.length).fill(null));
+    setSelected(Array(shuffledVragen.length).fill(null));
+    setConfirmed(Array(shuffledVragen.length).fill(false));
+    setFeedback(Array(shuffledVragen.length).fill(null));
   }
 
   function handleRetry() {
@@ -273,9 +273,9 @@ export default function MultipleChoiceQuiz({ vragen, onDone, current: initialCur
     return (
       <div style={{ textAlign: 'center', marginTop: 40 }}>
         <h2 style={{ color: '#111827', fontSize: 26, fontWeight: 800 }}>Overzicht</h2>
-        <p style={{ fontSize: 20, color: '#111827', fontWeight: 700 }}>Je score: <span style={{ color: score === vragen.length ? '#16a34a' : score === 0 ? '#dc2626' : '#111827' }}>{score} / {vragen.length}</span></p>
+        <p style={{ fontSize: 20, color: '#111827', fontWeight: 700 }}>Je score: <span style={{ color: score === shuffledVragen.length ? '#16a34a' : score === 0 ? '#dc2626' : '#111827' }}>{score} / {shuffledVragen.length}</span></p>
         <div style={{ textAlign: 'left', margin: '0 auto', maxWidth: 520, marginBottom: 24 }}>
-          {vragen.map((vraag, idx) => {
+          {shuffledVragen.map((vraag, idx) => {
             const juist = selected[idx] === vraag.correct;
             const onbeantwoord = selected[idx] === null;
             return (
@@ -313,8 +313,8 @@ export default function MultipleChoiceQuiz({ vragen, onDone, current: initialCur
     );
   }
 
-  const vraag = vragen[current];
-  const progress = (confirmed.filter(Boolean).length / vragen.length) * 100;
+  const vraag = shuffledVragen[current];
+  const progress = (confirmed.filter(Boolean).length / shuffledVragen.length) * 100;
 
   return (
     <div style={{ background: '#fff', borderRadius: 18, boxShadow: '0 2px 16px #e5e7eb', padding: 32, marginTop: 32 }}>
@@ -323,12 +323,12 @@ export default function MultipleChoiceQuiz({ vragen, onDone, current: initialCur
       </button>
       {/* Vraagnummer en resterende vragen */}
       <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 15, color: '#111827', fontWeight: 600, marginBottom: 4 }}>
-        <span>Vraag {current + 1} van {vragen.length}</span>
-        <span>NOG {vragen.length - selected.filter(s => s !== null).length} VRAGEN TE GAAN</span>
+        <span>Vraag {current + 1} van {shuffledVragen.length}</span>
+        <span>NOG {shuffledVragen.length - selected.filter(s => s !== null).length} VRAGEN TE GAAN</span>
       </div>
       {/* Nieuwe segmenten-voortgangsbalk */}
       <div style={{ display: 'flex', gap: 3, marginBottom: 12, marginTop: 2, justifyContent: 'center' }}>
-        {vragen.map((vraag, idx) => {
+        {shuffledVragen.map((vraag, idx) => {
           let kleur = '#a3a3a3'; // grijs
           if (selected[idx] !== null) {
             kleur = selected[idx] === vraag.correct ? '#16a34a' : '#dc2626';
@@ -434,7 +434,7 @@ export default function MultipleChoiceQuiz({ vragen, onDone, current: initialCur
         >
           Vorige
         </button>
-        {current < vragen.length - 1 ? (
+        {current < shuffledVragen.length - 1 ? (
           <button
             onClick={handleNext}
             style={{ padding: '8px 18px', borderRadius: 8, background: '#fff', border: '1.5px solid #d1d5db', fontSize: 15, cursor: 'pointer', fontWeight: 500, color: '#111827' }}
