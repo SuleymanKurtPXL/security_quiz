@@ -1,0 +1,72 @@
+body {
+  background: #fff;
+  color: #111;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.app {
+  background: #fff;
+  color: #111;
+}
+
+button, .optie, .dropzone {
+  background: #fff;
+  color: #111;
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 16px;
+  font-family: inherit;
+  font-weight: 500;
+  transition: background 0.15s, border 0.15s;
+}
+
+button:hover:not(:disabled), .optie:hover:not(:disabled) {
+  background: #f3f4f6;
+  border-color: #111;
+}
+
+.progress-bar {
+  background: #f3f4f6;
+  border-radius: 8px;
+  height: 7px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+.progress {
+  background: #111;
+  height: 7px;
+  border-radius: 8px;
+  transition: width 0.3s;
+}
+
+.mnemonic-card {
+  background: #f3f4f6;
+  color: #111;
+  border-radius: 8px;
+  padding: 0.75em;
+  margin: 1em 0;
+  font-size: 15px;
+}
+
+.uitleg {
+  background: #f3f4f6;
+  color: #111;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 15px;
+  min-height: 36px;
+  margin-top: 18px;
+}
+
+.feedback {
+  font-weight: 700;
+  font-size: 16px;
+  color: #111;
+  background: #e5e7eb;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+  margin-top: 4px;
+} 
