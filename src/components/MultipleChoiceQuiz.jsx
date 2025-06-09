@@ -184,7 +184,30 @@ function renderVraagTekst(vraag) {
   return elements;
 }
 
+function shuffleArray(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function prepareVragen(vragen) {
+  // Shuffle vragen
+  const shuffledVragen = shuffleArray(vragen).map(vraag => {
+    // Shuffle opties per vraag
+    const indices = Array.from({length: vraag.opties.length}, (_, i) => i);
+    const shuffledIndices = shuffleArray(indices);
+    const nieuweOpties = shuffledIndices.map(i => vraag.opties[i]);
+    const nieuweCorrect = shuffledIndices.indexOf(vraag.correct);
+    return { ...vraag, opties: nieuweOpties, correct: nieuweCorrect };
+  });
+  return shuffledVragen;
+}
+
 export default function MultipleChoiceQuiz({ vragen, onDone, current: initialCurrent, score: initialScore, selected: initialSelected, confirmed: initialConfirmed, feedback: initialFeedback, onProgress }) {
+  const [vragen] = useState(() => prepareVragen(vragen));
   const [current, setCurrent] = useState(initialCurrent ?? 0);
   const [score, setScore] = useState(initialScore ?? 0);
   const [selected, setSelected] = useState(initialSelected ?? Array(vragen.length).fill(null));

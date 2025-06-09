@@ -198,6 +198,19 @@ function shuffleArray(array) {
   return arr;
 }
 
+function prepareVragen(vragen) {
+  // Shuffle vragen
+  const shuffledVragen = shuffleArray(vragen).map(vraag => {
+    // Shuffle opties per vraag
+    const indices = Array.from({length: vraag.opties.length}, (_, i) => i);
+    const shuffledIndices = shuffleArray(indices);
+    const nieuweOpties = shuffledIndices.map(i => vraag.opties[i]);
+    const nieuweCorrect = shuffledIndices.indexOf(vraag.correct);
+    return { ...vraag, opties: nieuweOpties, correct: nieuweCorrect };
+  });
+  return shuffledVragen;
+}
+
 export default function DragDropQuiz({ vragen, onDone, showOefenExamenButton, current: initialCurrent, score: initialScore, selected: initialSelected, confirmed: initialConfirmed, feedback: initialFeedback, mixedVragen: initialMixedVragen, onProgress }) {
   const [current, setCurrent] = useState(initialCurrent ?? 0);
   const [score, setScore] = useState(initialScore ?? 0);
@@ -207,6 +220,7 @@ export default function DragDropQuiz({ vragen, onDone, showOefenExamenButton, cu
   const [dragged, setDragged] = useState(null);
   const [mixedVragen, setMixedVragen] = useState(initialMixedVragen ?? null);
   const [showResult, setShowResult] = useState(false);
+  const [vragen] = useState(() => prepareVragen(vragen));
 
   useEffect(() => {
     if (onProgress) {
