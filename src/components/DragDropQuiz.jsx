@@ -198,6 +198,15 @@ function shuffleArray(array) {
   return arr;
 }
 
+function uniqueVragenByTekst(vragen) {
+  const seen = new Set();
+  return vragen.filter(v => {
+    if (seen.has(v.vraag)) return false;
+    seen.add(v.vraag);
+    return true;
+  });
+}
+
 function prepareVragen(vragen) {
   // Shuffle vragen
   const shuffledVragen = shuffleArray(vragen).map(vraag => {
@@ -220,7 +229,7 @@ export default function DragDropQuiz({ vragen, onDone, showOefenExamenButton, cu
   const [dragged, setDragged] = useState(null);
   const [mixedVragen, setMixedVragen] = useState(initialMixedVragen ?? null);
   const [showResult, setShowResult] = useState(false);
-  const [shuffledVragen] = useState(() => prepareVragen(vragen));
+  const [shuffledVragen, setShuffledVragen] = useState(() => prepareVragen(vragen));
 
   useEffect(() => {
     if (onProgress) {
@@ -287,15 +296,17 @@ export default function DragDropQuiz({ vragen, onDone, showOefenExamenButton, cu
   }
 
   function handleRestart() {
+    setShuffledVragen(prepareVragen(vragen));
     setCurrent(0);
     setScore(0);
-    setSelected(Array(shuffledVragen.length).fill(null));
-    setConfirmed(Array(shuffledVragen.length).fill(false));
-    setFeedback(Array(shuffledVragen.length).fill(null));
+    setSelected(Array((mixedVragen || vragen).length).fill(null));
+    setConfirmed(Array((mixedVragen || vragen).length).fill(false));
+    setFeedback(Array((mixedVragen || vragen).length).fill(null));
+    setShowResult(false);
   }
 
   function handleOefenExamen() {
-    // Combineer alle vragen uit alle chunks en shuffle
+    // Combineer alle vragen uit alle chunks en shuffle, verwijder dubbele vraagteksten
     const allVragen = [
       ...chunk1,
       ...chunk2,
@@ -305,7 +316,8 @@ export default function DragDropQuiz({ vragen, onDone, showOefenExamenButton, cu
       ...chunk_python,
       ...chunk_mini_exam
     ];
-    const shuffled = shuffleArray(allVragen);
+    const unique = uniqueVragenByTekst(allVragen);
+    const shuffled = prepareVragen(unique);
     setMixedVragen(shuffled);
     setCurrent(0);
     setScore(0);

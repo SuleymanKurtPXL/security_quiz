@@ -329,7 +329,7 @@ export default function MultipleChoiceQuiz({ vragen, onDone, current: initialCur
         <span>Vraag {current + 1} van {shuffledVragen.length}</span>
         <span>NOG {shuffledVragen.length - selected.filter(s => s !== null).length} VRAGEN TE GAAN</span>
       </div>
-      {/* Nieuwe segmenten-voortgangsbalk */}
+      {/* Oude segmenten-voortgangsbalk */}
       <div style={{ display: 'flex', gap: 3, marginBottom: 12, marginTop: 2, justifyContent: 'center' }}>
         {shuffledVragen.map((vraag, idx) => {
           let kleur = '#a3a3a3'; // grijs
@@ -365,7 +365,9 @@ export default function MultipleChoiceQuiz({ vragen, onDone, current: initialCur
             style={{
               display: 'flex',
               alignItems: 'center',
+              justifyContent: 'flex-start',
               width: '100%',
+              minHeight: 56,
               background: selected[current] === idx
                 ? (idx === vraag.correct && confirmed[current] ? '#e5e7eb' : '#f3f4f6')
                 : '#fff',
@@ -380,7 +382,11 @@ export default function MultipleChoiceQuiz({ vragen, onDone, current: initialCur
               cursor: showResult ? 'not-allowed' : 'pointer',
               transition: 'background 0.15s, border 0.15s',
               outline: 'none',
-              gap: 18
+              gap: 18,
+              textAlign: 'left',
+              wordBreak: 'break-word',
+              whiteSpace: 'normal',
+              boxSizing: 'border-box',
             }}
           >
             <span style={{
@@ -403,7 +409,14 @@ export default function MultipleChoiceQuiz({ vragen, onDone, current: initialCur
               boxSizing: 'border-box',
               flexShrink: 0
             }}>{LETTERS[idx]}</span>
-            {optie}
+            <span style={{
+              display: 'flex',
+              alignItems: 'center',
+              minHeight: 36,
+              width: '100%',
+              wordBreak: 'break-word',
+              whiteSpace: 'normal',
+            }}>{optie}</span>
           </button>
         ))}
       </div>
