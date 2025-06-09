@@ -51,7 +51,7 @@ const CHUNKS = [
     key: "mini_exam",
     titel: "✅ Mini Examen – Oefenvragen (23 stuks)",
     vragen: chunk_mini_exam,
-    beschrijving: "Mini-examen met 15 representatieve oefenvragen over forensisch onderzoek, Python, SQL en meer."
+    beschrijving: "Mini-examen met 23 representatieve oefenvragen over forensisch onderzoek, Python, SQL en meer."
   }
 ];
 
