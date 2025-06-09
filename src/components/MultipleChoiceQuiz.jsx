@@ -207,7 +207,7 @@ function prepareVragen(vragen) {
 }
 
 export default function MultipleChoiceQuiz({ vragen, onDone, current: initialCurrent, score: initialScore, selected: initialSelected, confirmed: initialConfirmed, feedback: initialFeedback, onProgress }) {
-  const [shuffledVragen] = useState(() => prepareVragen(vragen));
+  const [shuffledVragen, setShuffledVragen] = useState(() => prepareVragen(vragen));
   const [current, setCurrent] = useState(initialCurrent ?? 0);
   const [score, setScore] = useState(initialScore ?? 0);
   const [selected, setSelected] = useState(initialSelected ?? Array(shuffledVragen.length).fill(null));
@@ -249,11 +249,14 @@ export default function MultipleChoiceQuiz({ vragen, onDone, current: initialCur
   }
 
   function handleRestart() {
+    const nieuweShuffle = prepareVragen(vragen);
+    setShuffledVragen(nieuweShuffle);
     setCurrent(0);
     setScore(0);
-    setSelected(Array(shuffledVragen.length).fill(null));
-    setConfirmed(Array(shuffledVragen.length).fill(false));
-    setFeedback(Array(shuffledVragen.length).fill(null));
+    setSelected(Array(nieuweShuffle.length).fill(null));
+    setConfirmed(Array(nieuweShuffle.length).fill(false));
+    setFeedback(Array(nieuweShuffle.length).fill(null));
+    setShowResult(false);
   }
 
   function handleRetry() {
