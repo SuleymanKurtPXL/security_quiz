@@ -9,6 +9,7 @@ import { chunk_mini_exam } from "./data/chunk_mini_exam";
 import ChunkQuiz from "./components/ChunkQuiz";
 import MultipleChoiceQuiz from "./components/MultipleChoiceQuiz";
 import DragDropQuiz from "./components/DragDropQuiz";
+import { HashRouter } from "react-router-dom";
 
 const CHUNKS = [
   {
@@ -377,4 +378,10 @@ function App() {
   );
 }
 
-export default App; 
+export default function WrappedApp(props) {
+  return (
+    <HashRouter>
+      <App {...props} />
+    </HashRouter>
+  );
+} 
